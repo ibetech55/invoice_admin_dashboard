@@ -1,0 +1,144 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model invoices {
+  id                         Int                   @id @default(autoincrement())
+  instalation_number         String                @db.VarChar(255)
+  reference_month            DateTime              @db.Date()
+  expiration_date            DateTime
+  value_due                  Decimal               @db.Decimal(10, 2)
+  invoice_number             String                @db.VarChar(255)
+  serie                      Int
+  emission_date              DateTime
+  access_key                 String                @db.VarChar(255)
+  authorization_protocol     String                @db.VarChar(255)
+  invoice_created_at         DateTime               @db.Timestamptz()
+  class                      String                @db.VarChar(255)
+  subclass                   String                @db.VarChar(255)
+  moduality_tax              String                @db.VarChar(255)
+  last_read_date             DateTime              @db.Date()
+  current_read_date          DateTime              @db.Date()
+  number_days                Int
+  next_read_date             DateTime              @db.Date()
+  client_id                  Int
+  client                     clients               @relation(fields: [client_id], references: [id])
+  measurement_type           String                @db.VarChar(255)
+  measurement                String                @db.VarChar(50)
+  last_read_value            Decimal               @db.Decimal(10, 3)
+  current_read_value         Decimal               @db.Decimal(10, 3)
+  multiplication_constant    Int
+  consumption_kwh            Int
+  qr_code                    String                @db.VarChar(255)
+  current_account_generation Decimal               @db.Decimal(10, 2)
+  consumption_history        consumption_history[]
+  invoice_value_id           Int                   @unique
+  created_at                  DateTime              @default(now()) @db.Timestamptz()
+  updated_at                  DateTime              @updatedAt        @db.Timestamptz(3)
+  invoice_values             invoice_values        @relation(fields: [invoice_value_id], references: [id])
+}
+
+model clients {
+  id                Int        @id @default(autoincrement())
+  name              String     @db.VarChar(255)
+  client_number     String     @db.VarChar(255)
+  street_address    String     @db.VarChar(255)
+  zip_code          String     @db.VarChar(255)
+  tax_identifier    String     @db.VarChar(255)
+  state_inscription String?    @db.VarChar(255)
+  city              String     @db.VarChar(255)
+  state             String     @db.VarChar(255)
+  type              String     @db.VarChar(255)
+  invoices          invoices[]
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+}
+
+model consumption_history {
+  id                      Int      @id @default(autoincrement())
+  month_year              String   @db.VarChar(255)
+  consumption_kwh         Decimal  @db.Decimal(10, 3)
+  measurement_kwh_per_day Decimal  @db.Decimal(10, 2)
+  days                    Int
+  index                   Int
+  invoice_number          String   @db.VarChar(255)
+  invoice_id              Int
+  invoice                 invoices @relation(fields: [invoice_id], references: [id])
+}
+
+model invoice_values {
+  id                                Int                 @id @default(autoincrement())
+  electric_energy_id                Int                 @unique
+  energy_scee_id                    Int                 @unique
+  energy_compensated_id             Int                 @unique
+  contrib_llum_public_municipal_val Decimal             @db.Decimal(10, 2)
+  bonus_itaipu_val                  Decimal?            @db.Decimal(10, 2)
+  account_fine_id                   Int?                @unique
+  account_tax_id                    Int?                @unique
+  account_correction_id             Int?                @unique
+  invoices                          invoices?
+  electric_energy                   electric_energy     @relation(fields: [electric_energy_id], references: [id])
+  energy_scee                       energy_scee         @relation(fields: [energy_scee_id], references: [id])
+  energy_compensated                energy_compensated  @relation(fields: [energy_compensated_id], references: [id])
+  account_fine                      account_fine?       @relation(fields: [account_fine_id], references: [id])
+  account_tax                       account_tax?        @relation(fields: [account_tax_id], references: [id])
+  account_correction                account_correction? @relation(fields: [account_correction_id], references: [id])
+}
+
+model electric_energy {
+  id             Int             @id @default(autoincrement())
+  quantity       Int
+  unit_price     Decimal         @db.Decimal(10, 8)
+  value          Decimal         @db.Decimal(10, 2)
+  unit_tax       Decimal         @db.Decimal(10, 8)
+  invoice_values invoice_values?
+}
+
+model energy_scee {
+  id             Int             @id @default(autoincrement())
+  quantity       Int
+  unit_price     Decimal         @db.Decimal(10, 8)
+  value          Decimal         @db.Decimal(10, 2)
+  unit_tax       Decimal         @db.Decimal(10, 8)
+  invoice_values invoice_values?
+}
+
+model energy_compensated {
+  id             Int             @id @default(autoincrement())
+  quantity       Int
+  unit_price     Decimal         @db.Decimal(10, 8)
+  value          Decimal         @db.Decimal(10, 2)
+  unit_tax       Decimal         @db.Decimal(10, 8)
+  invoice_values invoice_values?
+}
+
+model account_fine {
+  id             Int             @id @default(autoincrement())
+  account_month  DateTime        @db.Date()
+  account_value  Decimal         @db.Decimal(10, 2)
+  invoice_values invoice_values?
+}
+
+model account_tax {
+  id                Int             @id @default(autoincrement())
+  account_value     Decimal         @db.Decimal(10, 2)
+  account_month     DateTime        @db.Date()
+  account_date_paid DateTime        @db.Date()
+  invoice_values    invoice_values?
+}
+
+model account_correction {
+  id                Int             @id @default(autoincrement())
+  account_value     Decimal         @db.Decimal(10, 2)
+  account_month     DateTime        @db.Date()
+  account_date_paid DateTime        @db.Date()
+  invoice_values    invoice_values?
+}

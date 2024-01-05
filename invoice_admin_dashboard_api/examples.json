@@ -1,0 +1,83 @@
+{
+  "instalationNumber": "wash",
+  "referenceMonth": "wash",
+  "expirationDate": "wash",
+  "valueDue": "wash",
+  "invoiceNumber": "wash",
+  "serie": "wash",
+  "accessKey": "wash",
+  "authorizationProtocol": "wash",
+  "invoiceCreatedAt": "wash",
+  "class": "wash",
+  "subClass": "wash",
+  "modulaityTax": "wash",
+  "lastReadDate": "wash",
+  "currentReadDate": "wash",
+  "numberDays": "wash",
+  "nextReadDate": "wash",
+  "qrCode": "wash",
+  "currentAccountGeneration": "wash",
+  "client": {
+    "name": "Prince Ibewiro",
+    "clientNumber": "2222222",
+    "streetAddress": "Emilio Bosco 1855",
+    "zipCode": "111111111",
+    "taxIdentifier": "11111111111",
+    "stateInscription": "22222222222222",
+    "city": "Sumare",
+    "state": "SP",
+    "type": "person"
+  },
+  "valuesInvoices": {
+    "electricEnergy": {
+      "unit": 10.11111111,
+      "quantity": 10.11111111,
+      "unitPrice": 10.11111111,
+      "pisCofins": 10.11111111,
+      "baseCalcIcms": 10.11111111,
+      "aliqIcms": 10.11111111,
+      "icms": 10.11111111,
+      "unitTax": 10.11111111
+    },
+    "sceeIcmsEnergy": {
+      "unit": 10.11111111,
+      "quantity": 10.11111111,
+      "unitPrice": 10.11111111,
+      "pisCofins": 10.11111111,
+      "baseCalcIcms": 10.11111111,
+      "aliqIcms": 10.11111111,
+      "icms": 10.11111111,
+      "unitTax": 10.11111111
+    },
+    "compensatedGdEnergy": {
+      "unit": 10.11111111,
+      "quantity": 10.11111111,
+      "unitPrice": 10.11111111,
+      "pisCofins": 10.11111111,
+      "baseCalcIcms": 10.11111111,
+      "aliqIcms": 10.11111111,
+      "icms": 10.11111111,
+      "unitTax": 10.11111111
+    },
+    "llumPublicMunicipalContrib": {
+      "unit": 10.11111111,
+      "quantity": 10.11111111,
+      "unitPrice": 10.11111111,
+      "pisCofins": 10.11111111,
+      "baseCalcIcms": 10.11111111,
+      "aliqIcms": 10.11111111,
+      "icms": 10.11111111,
+      "unitTax": 10.11111111
+    }
+  },
+  "consumptionHistory": [
+    {
+      "monthYear": "string",
+      "consumptionKwh": 12,
+      "measurementKwhPerDay": 12,
+      "days": 12,
+      "index": 12,
+      "invoiceNumber": "1111111111"
+    }
+  ]
+}
