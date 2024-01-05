@@ -52,7 +52,7 @@ const useInvoice = (): IUseInvocie => {
   });
 
   const uploadInvoice = (value:any) => {
-    console.log(value)
+    console.log(value, 666)
   }
 
   const reset = () => {

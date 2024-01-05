@@ -8,5 +8,9 @@
 .ant-btn-primary {
     box-shadow: none;
   } 
+
+  .ant-upload-list-item.ant-upload-list-item-uploading .ant-upload-icon {
+    display: none;
+  }
   
   a:hover { text-decoration: underline; }

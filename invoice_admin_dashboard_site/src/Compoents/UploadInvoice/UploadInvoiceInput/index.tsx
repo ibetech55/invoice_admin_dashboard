@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { InboxOutlined } from "@ant-design/icons";
-import type { UploadProps } from "antd";
+import type { UploadFile, UploadProps } from "antd";
 import { Button, message, Upload } from "antd";
 
 interface IProps {
@@ -8,15 +8,23 @@ interface IProps {
 }
 const { Dragger } = Upload;
 
+
+
+const UploadInvoiceInput = ({ uploadInvoice }: IProps) => {
+
+
+const [files, setFiles] = useState<UploadFile[]>([])
+
 const props: UploadProps = {
   name: "pdfFile",
   customRequest: () => {
-    console.log(999);
+  },
+  showUploadList:{
+    showRemoveIcon:true
   },
   multiple: true,
-  //   action: 'https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188',
   onChange(info) {
-    console.log(info);
+   setFiles([...info.fileList])
     // const { status } = info.file;
     // if (status !== "uploading") {
     //   console.log(info.file, info.fileList);
@@ -32,26 +40,26 @@ const props: UploadProps = {
   //   },
 };
 
-const UploadInvoiceInput = ({ uploadInvoice }: IProps) => (
-  <>
-    <Dragger {...props}>
-      <p className="ant-upload-drag-icon">
-        <InboxOutlined />
-      </p>
-      <p className="ant-upload-text">
-        Click or drag file to this area to upload
-      </p>
-      <p className="ant-upload-hint">
-        Support for a single or bulk upload. Strictly prohibited from uploading
-        company data or other banned files.
-      </p>
-      <div></div>
-    </Dragger>
-    <div style={{marginTop:16}}>
-    <Button type="primary">Upload Files</Button>
-
-    </div>
-  </>
-);
+  return (
+    <>
+      <Dragger {...props}>
+        <p className="ant-upload-drag-icon">
+          <InboxOutlined />
+        </p>
+        <p className="ant-upload-text">
+          Click or drag file to this area to upload
+        </p>
+        <p className="ant-upload-hint">
+          Support for a single or bulk upload. Strictly prohibited from uploading
+          company data or other banned files.
+        </p>
+        <div></div>
+      </Dragger>
+      <div style={{marginTop:16}}>
+      <Button type="primary" onClick={()=>uploadInvoice(files)}>Upload Files</Button>
+      </div>
+    </>
+  );
+}
 
 export default UploadInvoiceInput;
