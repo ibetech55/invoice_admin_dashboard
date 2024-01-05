@@ -7,6 +7,7 @@ import {
   getInvoices,
   getInvoiceTotalValues,
   getTotalValueDueReferenceMonth,
+  uploadInvoice,
 } from "../../State/Invoice/actions";
 import { GetInvoicesDataDto } from "../../Data/InvoiceDtos/GetInvoicesDto";
 import { GetTotalValueDueReferenceMonthDto } from "../../Data/InvoiceDtos/GetTotalValueDueReferenceMonthDto";
@@ -16,6 +17,7 @@ import {
 } from "../../Data/InvoiceDtos/InvoiceFilterDto";
 import { formatMonthToIsoDate } from "../../Utils/FormatMonthToIsoDate";
 import { GetInvoiceDto } from "../../Data/InvoiceDtos/GetInvoiceDto";
+import { UploadFile } from "antd";
 
 interface IUseInvocie {
   invoicesData: GetInvoicesDataDto[];
@@ -51,8 +53,12 @@ const useInvoice = (): IUseInvocie => {
     limit: 10
   });
 
-  const uploadInvoice = (value:any) => {
-    console.log(value, 666)
+  const handleUploadInvoice = (values:UploadFile[]) => {
+    values.forEach((x:UploadFile)=>{
+      const formData = new FormData();
+      formData.append('pdfFile', x.originFileObj as File)
+      dispatch(uploadInvoice(formData))
+    })
   }
 
   const reset = () => {
@@ -108,7 +114,7 @@ const useInvoice = (): IUseInvocie => {
     handleGetInvoice,
     invoiceData:invoiceData.invoice,
     loading: invoiceData.loading,
-    uploadInvoice
+    uploadInvoice:handleUploadInvoice
   };
 };
 

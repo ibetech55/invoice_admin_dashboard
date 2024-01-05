@@ -58,8 +58,8 @@ model clients {
   state             String     @db.VarChar(255)
   type              String     @db.VarChar(255)
   invoices          invoices[]
-  createdAt         DateTime   @default(now())
-  updatedAt         DateTime   @updatedAt
+  created_at         DateTime   @default(now())
+  updated_at         DateTime   @updatedAt
 }
 
 model consumption_history {

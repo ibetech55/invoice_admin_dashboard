@@ -3,6 +3,8 @@ import Template from "../Compoents/Template";
 import Dashboard from "../Pages/Dashboard";
 import InvoiceDetails from "../Pages/InvoiceDetails";
 import UploadInvoice from "../Pages/UploadInvoice";
+import Clients from "../Pages/Clients";
+import ClientDetails from "../Pages/ClientDetails";
 
 const router = createBrowserRouter([
     {
@@ -15,7 +17,7 @@ const router = createBrowserRouter([
         },
         {
           path: "/clients",
-          element: <div>Clients</div>,
+          element: <Clients />,
         },
         {
           path: "/:id",
@@ -24,6 +26,10 @@ const router = createBrowserRouter([
         {
           path: "/upload_invoice",
           element: <UploadInvoice />,
+        },
+        {
+          path: "/client/:id",
+          element: <ClientDetails />,
         },
       ],
     },

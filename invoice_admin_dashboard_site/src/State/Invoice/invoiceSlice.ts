@@ -11,6 +11,7 @@ import {
 import { GetInvoiceTotalValues } from "../../Data/InvoiceDtos/GetInvoiceTotalValues";
 import { GetTotalValueDueReferenceMonthDto } from "../../Data/InvoiceDtos/GetTotalValueDueReferenceMonthDto";
 import { GetInvoiceDto } from "../../Data/InvoiceDtos/GetInvoiceDto";
+import { notification } from "antd";
 
 const invoiceSlice = createSlice({
   name: "invoiceValues",
@@ -73,8 +74,25 @@ const invoiceSlice = createSlice({
         uploadInvoice.fulfilled,
         (state) => {
           state.loading = false;
+          state.uploadError = false;
+          notification.success({
+            description: "Files Uploaded",
+            message: "Files Uploaded Successfully",
+            placement: "top",
+            duration: 3000,
+          });
         }
-      );
+      )
+      .addCase(
+        uploadInvoice.rejected,
+        (state) => {
+          state.uploadError = true;
+          notification.error({
+            message: "Error",
+            description: "Error try again",
+          });
+        }
+      )
   },
 });
 

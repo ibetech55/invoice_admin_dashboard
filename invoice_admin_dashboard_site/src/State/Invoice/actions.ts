@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../Configs/axios";
 import { GetInvoicesDto } from "../../Data/InvoiceDtos/GetInvoicesDto";
@@ -28,7 +29,9 @@ export const getInvoiceTotalValues = createAsyncThunk(
 
 export const getTotalValueDueReferenceMonth = createAsyncThunk(
   "invoice/getTotalValueDueReferenceMonth",
-  async (params?: InvoiceParamsDto): Promise<GetTotalValueDueReferenceMonthDto[]> => {
+  async (
+    params?: InvoiceParamsDto
+  ): Promise<GetTotalValueDueReferenceMonthDto[]> => {
     const { data } = await axios.get(
       "/invoice/getTotalValueDueReferenceMonth",
       {
@@ -42,17 +45,21 @@ export const getTotalValueDueReferenceMonth = createAsyncThunk(
 export const getInvoiceById = createAsyncThunk(
   "invoice/getInvoiceById",
   async (id: string): Promise<GetInvoiceDto> => {
-    const { data } = await axios.get(
-      `/invoice/getById/${id}`);
+    const { data } = await axios.get(`/invoice/getById/${id}`);
     return data;
   }
 );
 
 export const uploadInvoice = createAsyncThunk(
   "invoice/uploadInvoice",
-  async (formData:FormData): Promise<GetInvoiceDto> => {
-    const { data } = await axios.post(
-      '/invoice', formData);
-    return data;
+  async (formData: FormData, { rejectWithValue }): Promise<GetInvoiceDto> => {
+    try {
+      const { data } = await axios.post("/invoice", formData);
+      return data;
+    } catch (error:any) {
+      return rejectWithValue(
+        error.response.data.message
+      ) as unknown as GetInvoiceDto;
+    }
   }
 );

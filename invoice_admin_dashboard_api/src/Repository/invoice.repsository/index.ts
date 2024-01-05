@@ -174,7 +174,7 @@ export class InvoiceRepository implements IInvoiceRepository {
               name: values.client.name,
               client_number: values.client.clientNumber,
               street_address: values.client.streetAddress,
-              zip_code: values.client.name,
+              zip_code: values.client.zipCode,
               tax_identifier: values.client.taxIdentifier,
               state_inscription: values.client.stateInscription,
               city: values.client.city,
@@ -265,138 +265,6 @@ export class InvoiceRepository implements IInvoiceRepository {
             },
           },
         },
-      });
-
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  async createMany(values: CreateInvoiceDto[]) {
-    try {
-      const data = await this.prisma.invoices.createMany({
-        data: values.map((x: CreateInvoiceDto) => ({
-          instalation_number: x.instalationNumber,
-          reference_month: new Date(x.referenceMonth),
-          expiration_date: new Date(x.expirationDate),
-          value_due: x.valueDue,
-          invoice_number: x.invoiceNumber,
-          serie: x.serie,
-          emission_date: new Date(x.emissionDate),
-          access_key: x.accessKey,
-          authorization_protocol: x.authorizationProtocol,
-          invoice_created_at: x.invoiceCreatedAt,
-          class: x.class,
-          subclass: x.subClass,
-          moduality_tax: x.modulaityTax,
-          last_read_date: new Date(x.lastReadDate),
-          current_read_date: new Date(x.currentReadDate),
-          number_days: x.numberDays,
-          next_read_date: new Date(x.nextReadDate),
-          measurement_type: x.measurementType,
-          measurement: x.measurement,
-          last_read_value: x.lastReadValue,
-          current_read_value: x.currentReadValue,
-          multiplication_constant: x.multiplicationConstant,
-          consumption_kwh: x.consumptionKwh,
-          qr_code: x.qrCode,
-          current_account_generation: x.currentAccountGeneration,
-          client: {
-            create: {
-              name: x.client.name,
-              client_number: x.client.clientNumber,
-              street_address: x.client.streetAddress,
-              zip_code: x.client.name,
-              tax_identifier: x.client.taxIdentifier,
-              state_inscription: x.client.stateInscription,
-              city: x.client.city,
-              state: x.client.state,
-              type: x.client.type,
-            },
-          },
-          consumption_history: {
-            create: x.consumptionHistory.map((ch) => ({
-              month_year: ch.monthYear,
-              consumption_kwh: ch.consumptionKwh,
-              measurement_kwh_per_day: ch.measurementKwhPerDay,
-              days: ch.days,
-              index: ch.index,
-              invoice_number: ch.invoiceNumber,
-            })),
-          },
-          invoice_values: {
-            create: {
-              electric_energy: {
-                create: {
-                  quantity: x.invoiceValues.electricEnergy.quantity,
-                  unit_price: x.invoiceValues.electricEnergy.unitPrice,
-                  unit_tax: x.invoiceValues.electricEnergy.unitTax,
-                  value: x.invoiceValues.electricEnergy.value,
-                },
-              },
-              energy_scee: {
-                create: {
-                  quantity: x.invoiceValues.energyScee.quantity,
-                  unit_price: x.invoiceValues.energyScee.unitPrice,
-                  unit_tax: x.invoiceValues.energyScee.unitTax,
-                  value: x.invoiceValues.energyScee.value,
-                },
-              },
-              energy_compensated: {
-                create: {
-                  quantity: x.invoiceValues.energyCompensated.quantity,
-                  unit_price: x.invoiceValues.energyCompensated.unitPrice,
-                  unit_tax: x.invoiceValues.energyCompensated.unitTax,
-                  value: x.invoiceValues.energyCompensated.value,
-                },
-              },
-              bonus_itaipu_val: x.invoiceValues.bonusItaipu
-                ? x.invoiceValues.bonusItaipu
-                : null,
-              contrib_llum_public_municipal_val:
-                x.invoiceValues.contribLlumPublicMunicipalVal,
-              account_fine: x.invoiceValues.accountFine
-                ? {
-                    create: {
-                      account_month: new Date(
-                        x.invoiceValues.accountFine.accountMonth
-                      ),
-                      account_value:
-                        x.invoiceValues.accountFine.accountValue,
-                    },
-                  }
-                : {},
-              account_tax: x.invoiceValues.accountTax
-                ? {
-                    create: {
-                      account_month: new Date(
-                        x.invoiceValues.accountTax.accountMonth
-                      ),
-                      account_value:
-                        x.invoiceValues.accountTax.accountValue,
-                      account_date_paid: new Date(
-                        x.invoiceValues.accountTax.accountDatePaid
-                      ),
-                    },
-                  }
-                : {},
-              account_correction: x.invoiceValues.accountCorrection
-                ? {
-                    create: {
-                      account_month: new Date(
-                        x.invoiceValues.accountCorrection.accountMonth
-                      ),
-                      account_value:
-                        x.invoiceValues.accountCorrection.accountValue,
-                      account_date_paid: new Date(
-                        x.invoiceValues.accountCorrection.accountDatePaid
-                      ),
-                    },
-                  }
-                : {},
-            },
-          },
-        })),
       });
 
       return data;

@@ -46,8 +46,8 @@ CREATE TABLE "clients" (
     "city" VARCHAR(255) NOT NULL,
     "state" VARCHAR(255) NOT NULL,
     "type" VARCHAR(255) NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "clients_pkey" PRIMARY KEY ("id")
 );

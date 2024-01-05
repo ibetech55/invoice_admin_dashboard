@@ -13,9 +13,11 @@ export interface InvoiceValuesState {
   loading: boolean;
   error: string;
   invoice: GetInvoiceDto;
+  uploadError: boolean;
 }
 
 export const initialState: InvoiceValuesState = {
+  uploadError: false,
   invoices: [],
   totalValuesDueReferenceMonth:[],
   totalInvoices: 0,
